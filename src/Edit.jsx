@@ -1,50 +1,128 @@
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+
+
 function Edit(){
+    const data = useParams();
+    const fetchBlog = async () => {
+        const response = await axios.get("https://675132f069dc1669ec1d5f8b.mockapi.io/blogs" + data.id)
+        setEditData({
+            title: response.data.title,
+            subtitle:  response.data.subtitle,
+            description: response.data.description,
+            Image: response.data.iamge,
+        })
+    }
+    useEffect(() => {
+         fetchBlog()
+    },[]);
+    const navigate=usenavigate();
+    const [editData, setEditData] =useState({
+        title: "",
+        subtitle: "",
+        description: "",
+        image : "",
+    });
+
+    const handleChange = (e) => {
+        const value = e.taeget.value
+        const name = e.target.name
+
+        setEditData({
+            ...editData,
+            [name]: value,
+        })
+    }
+    console.log(editData)
+    const updateBlog = async (e) => {
+        e.preventDefault();
+        const response = await axios.put("https://675132f069dc1669ec1d5f8b.mockapi.io/blogs", editData);
+        if (response.status === 200) {
+            navigate("/")
+        }else {
+            alert("Something went wrong")
+        }
+    }
     return(
-        <>
-        <div className="bg-white border-4 rounded-lg shadow relative m-10">
-
-<div className="flex items-start justify-between p-5 border-b rounded-t">
-    <h3 className="text-xl font-semibold">
-        Edit product
-    </h3>
-    <button type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="product-modal">
-       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-    </button>
-</div>
-
-<div className="p-6 space-y-6">
-    <form action="#">
-        <div className="grid grid-cols-6 gap-6">
-            <div className="col-span-6 sm:col-span-3">
-                <label for="product-name" className="text-sm font-medium text-gray-900 block mb-2">Product Name</label>
-                <input type="text" name="product-name" id="product-name" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="Apple Imac 27”" required=""/>
-            </div>
-            <div className="col-span-6 sm:col-span-3">
-                <label for="category" className="text-sm font-medium text-gray-900 block mb-2">Category</label>
-                <input type="text" name="category" id="category" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="Electronics" required=""/>
-            </div>
-            <div className="col-span-6 sm:col-span-3">
-                <label for="brand" className="text-sm font-medium text-gray-900 block mb-2">Brand</label>
-                <input type="text" name="brand" id="brand" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="Apple" required=""/>
-            </div>
-            <div className="col-span-6 sm:col-span-3">
-                <label for="price" className="text-sm font-medium text-gray-900 block mb-2">Price</label>
-                <input type="number" name="price" id="price" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="$2300" required=""/>
-            </div>
-            <div className="col-span-full">
-                <label for="product-details" className="text-sm font-medium text-gray-900 block mb-2">Product Details</label>
-                <textarea id="product-details" rows="6" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-4" placeholder="Details"></textarea>
-            </div>
+        <div className="mt-20 max-w-2xl mx-auto p-4">
+      <form>
+        {/* Blog Title */}
+        <div className="mb-6">
+          <label htmlFor="title" className="block text-lg font-medium text-gray-800 mb-1">
+            Title
+          </label>
+          <input
+            type="text"
+            value={editData?.title}
+            id="title"
+            name="title"
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-100"
+            required
+          />
         </div>
-    </form>
-</div>
 
-<div className="p-6 border-t border-gray-200 rounded-b">
-    <button className="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="submit">Save all</button>
-</div>
+        <div className="mb-6">
+          <label htmlFor="subtitle" className="block text-lg font-medium text-gray-800 mb-1">
+            Subtitle
+          </label>
+          <input
+            type="text"
+            id="subtitle"
+            value={editData?.subtitle}
+            name="subtitle"
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-100"
+            required
+          />
+        </div>
 
-</div>
-        </>
-    )
+        {/* Blog Content */}
+        <div className="mb-6">
+          <label htmlFor="content" className="block text-lg font-medium text-gray-800 mb-1">
+            Description
+          </label>
+          <textarea
+            id="description"
+            name="description"
+            value={editData?.description}
+            onChange={handleChange}
+            rows="6"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-100"
+            required
+          ></textarea>
+        </div>
+
+        <div className="mb-6">
+          <label htmlFor="image" className="block text-lg font-medium text-gray-800 mb-1">
+            Image
+          </label>
+          <input
+            type="text"
+            id="image"
+            value={editData?.image}
+            name="image"
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-100"
+          />
+        </div>
+
+        {/* Submit Button */}
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            onClick={updateBlog}
+            className="px-6 py-2 bg-indigo-100 text-black text-sm font-medium rounded-xl hover:bg-indigo-200 focus:outline-none"
+          >
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  );
 }
-export default Edit
+
+export default Edit;
+
