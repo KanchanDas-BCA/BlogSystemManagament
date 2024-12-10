@@ -13,6 +13,7 @@ import Home from './Home.jsx'
 import AddBlog from './AddBlog.jsx'
 import Edit from './Edit.jsx'
 import Footer from './Footer.jsx'
+import Single from './Single.jsx'
 function App() {
   
 
@@ -30,6 +31,7 @@ function App() {
       <Route path='/addblog' element={<AddBlog/>}/>
       <Route path='/edit' element={<Edit/>}/>
       <Route path='/footer' element={<Footer/>}/>
+      <Route path='/single' element={<Single/>}/>
 
     </Routes>
     </BrowserRouter>

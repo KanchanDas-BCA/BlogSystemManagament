@@ -14,8 +14,7 @@ function Single(){
         fetchBlog()
     },[])
     const deleteBlog = async()=>{
-        // api--> axios.delete garnu parxa
-        const response = await axios.delete("https://675132f069dc1669ec1d5f8b.mockapi.io/blogs/" + data.id) navigate("/")
+        const response = await axios.delete("https://675132f069dc1669ec1d5f8b.mockapi.io/blogs/" + data.id)
     }
     return(
         <div className="bg-gray-100 dark:bg-gray-800 py-8">
