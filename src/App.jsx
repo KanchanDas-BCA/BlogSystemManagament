@@ -5,8 +5,6 @@ import Navbar from './Navbar'
 import Landing from './Landing'
 import Blog from './Blog'
 import Login from './Login'
-
-
 import Signup from './signup'
 import ForgotPassword from './ForgotPassword'
 import Home from './Home.jsx'
@@ -14,6 +12,7 @@ import AddBlog from './AddBlog.jsx'
 import Edit from './Edit.jsx'
 import Footer from './Footer.jsx'
 import Single from './Single.jsx'
+import Card from './Card.jsx'
 function App() {
   
 
@@ -22,6 +21,7 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route path='/' element={<Home/>}/>
+      <Route path='/card' element={<Card/>}/>
       <Route path='/navbar' element={<Navbar/>}/>
       <Route path='/landing' element={<Landing/>}/>
       <Route path='/blog' element={<Blog/>}/>

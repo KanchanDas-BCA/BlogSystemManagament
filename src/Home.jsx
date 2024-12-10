@@ -17,7 +17,7 @@ function Home(){
     return(
         <>
         <Navbar/>
-        <div className="flex">
+        <div className="flex flex-warp flex-row">
             {
                 blogs.map(function(blog){
                     return (
@@ -26,9 +26,6 @@ function Home(){
                     )
                 })
             }
-                <Card />
-                <Card />
-                <Card />
         
         </div>
         <Footer />
